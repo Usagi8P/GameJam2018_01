@@ -1,16 +1,13 @@
 fileFormatVersion: 2
-guid: 057a37677ec0adb4192904e93f1b802e
-timeCreated: 1517003192
+guid: b50f3fb706faaa741b73a1a8539ec5b6
+timeCreated: 1517045643
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: 'Material #17'
-    2100002: 'Material #14'
-    2100004: 'Material #15'
-    2100006: 'Material #16'
+    2100000: 06 - Default
     2300000: //RootNode
     3300000: //RootNode
     4300000: Object000_Element079
