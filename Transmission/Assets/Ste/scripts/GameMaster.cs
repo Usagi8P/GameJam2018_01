@@ -8,6 +8,10 @@ public class GameMaster : MonoBehaviour {
     public int playerTime;
     public float startCountDownAfter = 2f;
     public float decreaseSpeed = 0.1f;
+    [Space]
+    public GameObject effect;
+    public GameObject signal;
+    public static GameObject objEffect, objSignal;
 
     public static GameMaster instance;
 
@@ -19,6 +23,9 @@ public class GameMaster : MonoBehaviour {
         else
             Destroy(this);
         #endregion
+
+        objEffect = effect;
+        objSignal = signal;
 
         timeSlider.maxValue = playerTime;
         timeSlider.value = playerTime;
@@ -32,13 +39,17 @@ public class GameMaster : MonoBehaviour {
         if (timeSlider.value <= 0)
         {
             CancelInvoke();
-            PlayerController.state = PlayerController.State.GameOver;
+            PlayerController.gameOver = true;
             print("Game Over");
         }
     }
 
-    public void RechargeBar()
+    public void RechargeBar(int value = 0)
     {
-        timeSlider.value = timeSlider.maxValue;
+        if (value == 0)
+            timeSlider.value = timeSlider.maxValue;
+        else
+            timeSlider.value += value;
+
     }
 }

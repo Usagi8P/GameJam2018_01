@@ -20,9 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4397659109100502}
   - component: {fileID: 212611718135085474}
-  - component: {fileID: 114301444308292324}
   - component: {fileID: 135476141301939144}
   - component: {fileID: 54440108581178986}
+  - component: {fileID: 114997892468861540}
+  - component: {fileID: 114521018998443684}
+  - component: {fileID: 95947394522698194}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -58,7 +60,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114301444308292324
+--- !u!95 &95947394522698194
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1552737680306768}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1372d817b02f14a4498b792b77999d55, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114521018998443684
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1552737680306768}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660cf05eefb28d64d9220224ad8fcc0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  waitTime: 1
+--- !u!114 &114997892468861540
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -66,9 +98,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1552737680306768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25d21ed2f40069d4a9625aeb72d0c18f, type: 3}
+  m_Script: {fileID: 11500000, guid: d8c9703909a10ca48b3bcca622b1a361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionRange: 0
+  pathsRoot: {fileID: 0}
+  paths: []
+  speed: 1
+  rotationSpeed: 1
+  bullet: {fileID: 1393385844897306, guid: e18221ea8518b6a42aa4e34e163fb673, type: 2}
+  rateOfFire: 0
 --- !u!135 &135476141301939144
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -95,7 +134,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5348e8ea96de7614fb32b29c3391b267, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -115,8 +154,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 355a2086060dacb41bae98294ca13096, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.5862069, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 90f07cc78d6235f43bc386b780f7fb2e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

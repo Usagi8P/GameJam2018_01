@@ -55,3 +55,5 @@ MonoBehaviour:
   playerTime: 100
   startCountDownAfter: 2
   decreaseSpeed: 0.1
+  effect: {fileID: 1945931632384164, guid: 69ce2fc1da216ce4182578a94b7b6bb1, type: 2}
+  signal: {fileID: 1543067458695648, guid: 7525f884ebcfee148ad2965814e66405, type: 2}

@@ -3,45 +3,64 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    public float speed = 2;
-    public float timeUntilNextSwitch = 1;
-    public GameObject effect;
-    public GameObject signal;
-    public enum State { Alive, GameOver};
-    public static State state;
+    [Tooltip("The speed movement.")] public float speed = 2;
+    [Tooltip("The time to wait for the next switch of body.")] public float waitTime = 1;
+    public static bool gameOver;
     Vector3 direction;
     Transform enemy;
-    GameMaster gm;
     GameObject signalInstance;
-    bool canSwitch, stopSwitch;
+    Animator anim;
+    bool canSwitch;
+    static bool stopSwitch;
 
     private void Start()
     {
-        gm = FindObjectOfType<GameMaster>();
+        anim = GetComponent<Animator>();
     }
 
     void FixedUpdate () {
-        if (state == State.GameOver) return;
-
-        // Movement
-        direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-		if (direction != Vector3.zero)
+        if (gameOver)
         {
-            transform.Translate(direction * speed * Time.fixedDeltaTime);
+            if (signalInstance) Destroy(signalInstance);
+            //return;
         }
+
+        Movement();
 
         // Change of body
         if (canSwitch && !stopSwitch && Input.GetButtonDown("Submit")) {
-            Vector3 newPosition = transform.position;
-
-            gm.RechargeBar();
-            Instantiate(effect, transform.position, RotateTowards(enemy));
-            transform.position = enemy.transform.position;
-
-            enemy.transform.position = newPosition;
-            StartCoroutine(WaitTime(timeUntilNextSwitch));
+            ChangeBody();
         }
 	}
+
+    protected virtual void Movement()
+    {
+        // Movement
+        Vector3 velocity = new Vector3(Input.GetAxis("Horizontal") * speed * Time.fixedDeltaTime, 0, Input.GetAxis("Vertical") * speed * Time.fixedDeltaTime);
+
+        anim.SetFloat("x", velocity.x);
+        anim.SetFloat("y", velocity.z);
+        if (velocity != Vector3.zero)
+        {
+            anim.SetBool("walk", true);
+            transform.Translate(velocity);
+        }
+        else
+            anim.SetBool("walk", false);
+    }
+
+    void ChangeBody()
+    {
+        //GameMaster.instance.RechargeBar();
+        Instantiate(GameMaster.objEffect, transform.position, RotateTowards(enemy));
+
+        enemy.GetComponent<NPCBehaviour>().enabled = false;
+        this.GetComponent<NPCBehaviour>().enabled = true;
+        this.enabled = false;
+        enemy.GetComponent<PlayerController>().enabled = true;
+
+        StartCoroutine(WaitTime(waitTime));
+    }
 
     Quaternion RotateTowards(Transform point)
     {
@@ -52,16 +71,16 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.GetComponent<EnemyController>() && !stopSwitch)
+        if (other.GetComponent<NPCBehaviour>() && GetComponent<PlayerController>().isActiveAndEnabled && !stopSwitch)
         {
             if (signalInstance == null)
-                signalInstance = Instantiate(signal, transform);
+                signalInstance = Instantiate(GameMaster.objSignal, transform);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<EnemyController>() && !stopSwitch)
+        if (other.GetComponent<NPCBehaviour>() && !stopSwitch)
         {
             enemy = other.transform;
             canSwitch = true;
@@ -70,7 +89,7 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<EnemyController>())
+        if (other.GetComponent<NPCBehaviour>())
         {
             Destroy(signalInstance);
             canSwitch = false;
